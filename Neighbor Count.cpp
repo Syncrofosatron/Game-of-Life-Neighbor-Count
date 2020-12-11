@@ -104,14 +104,12 @@ void NextState(int** array, int width, int height)
                 if (i == 0 && j == 0)
                 {
                     int count = 0;
-                    count += array[0][0]; // Itself. Do we consider the neighbors of the dead?
+                    count += array[0][0]; // Itself. Do we consider the neighbors of the dead? If yes, this is what it is here for. If not, just remove it and from below code too.
                     count += array[0][1];
                     count += array[1][1];
                     count += array[1][0];
                     
                     cout << "Top Left"  << " : " << count << "\n";
-
-                    RulesOfLife(array, count);
                 }
                 if (i == width - 1 && j == 0)
                 {
@@ -122,8 +120,6 @@ void NextState(int** array, int width, int height)
                     count += array[width - 1][height - 2];
 
                     cout << "Bottom Left" << " : " << count << "\n";
-
-                    RulesOfLife(array, count);
                 }
                 if (i == 0 && j == height - 1)
                 {
@@ -134,8 +130,6 @@ void NextState(int** array, int width, int height)
                     count += array[width - 2][height - 1];
                     
                     cout << "Top Right" << " : " << count << "\n";
-
-                    RulesOfLife(array, count);
                 }
                 if (i == width - 1 && j == height - 1)
                 {
@@ -146,8 +140,6 @@ void NextState(int** array, int width, int height)
                     count += array[width - 1][height - 2];
                     
                     cout << "Bottom Right" << " : " << count << "\n";
-                    
-                    RulesOfLife(array, count);
                 }
             }
 
@@ -164,8 +156,6 @@ void NextState(int** array, int width, int height)
                         + array[i][j + 1] + itself;
                     
                     cout << "Top Edge : " << count << "\n";
-
-                    RulesOfLife(array, count);
                 }
 
                 if (i >= 1 && i < width - 1 && j == 0)
@@ -176,8 +166,6 @@ void NextState(int** array, int width, int height)
                         + array[i + 1][j] + itself;
 
                     cout << "Left Edge : " << count << "\n";
-
-                    RulesOfLife(array, count);
                 }
 
                 if (i >= 1 && i < width - 1 && j == height - 1)
@@ -188,8 +176,6 @@ void NextState(int** array, int width, int height)
                         + array[i + 1][j] + itself;
                     
                     cout << "Right Edge : " << count << "\n";
-
-                    RulesOfLife(array, count);
                 }
 
                 if (i == width - 1 && j >= 1 && j < height - 1)
@@ -200,8 +186,6 @@ void NextState(int** array, int width, int height)
                         + array[i][j + 1] + array[i][j];
 
                     cout << "Bottom Edge : " << count << "\n";
-
-                    RulesOfLife(array, count);
                 }
             }
 
@@ -216,8 +200,6 @@ void NextState(int** array, int width, int height)
                     + array[i + 1][j + 1] + array[i + 1][j] + array[i + 1][j - 1] + array[i][j - 1] + itself;
                 
                 cout << "Middle : " << count << "\n";
-
-                RulesOfLife(array, count);
             }
         }
     }
@@ -226,7 +208,7 @@ void NextState(int** array, int width, int height)
 /// <summary>
 /// Works like a fancy mask for the 0 and 1 states.
 /// 1. It takes into account the 0 and 1 states and prints them fancy.
-/// 2. I was thinking to replace the int with char to pretty print but it didn't quite workout.
+/// 2. I was thinking to replace the int with char to pretty print but it didn't quite worked out.
 ///    So, instead I am not overwriting the int with char, I am making new char 2D array to achieve the same.
 /// 3. Using setw() manipulator to make the rendering look more compact, precise and cool.
 
@@ -291,20 +273,14 @@ int main()
     int** array = new int*[width];
     for (int i = 0; i < width; ++i)
         array[i] = new int[height];
-
-    DeadState(array, width, height);
-
+    
     RandomizeStates(array, width, height);
 
     Render(array, width, height);
 
     NextState(array, width, height);
 
-    //Render(array, width, height);
-
-    //NextState(array, width, height);
-
-    //Render(array, width, height);
-
     delete[] array;
+    
+    return 0;
 }
